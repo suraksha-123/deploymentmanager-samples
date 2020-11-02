@@ -1,0 +1,24 @@
+image: google/cloud-sdk:latest
+
+before_script:
+  - gcloud config set project yash-innovation
+  - gcloud auth activate-service-account --key-file=${SERVICE_ACCOUNT_KEY}
+
+after_script:
+  - echo "After script section"
+stages:
+  - deploy
+  - undeploy
+
+deploy:
+  stage: deploy
+  script:
+    - gcloud deployment-manager deployments create my-first-deployment --config examples/v2/build_configuration/vm.yaml
+
+undeploy:
+  stage: undeploy
+  when: manual
+  script:
+    - gcloud deployment-manager deployments list
+    - gcloud deployment-manager deployments delete my-first-deployment -q
+    - gcloud deployment-manager deployments list
