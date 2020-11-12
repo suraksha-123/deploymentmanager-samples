@@ -23,4 +23,4 @@ resources:
   properties:
     metadata-from-file:
       startup-script: startup-script.sh
-    zone: ZONE_TO_RUN
+    zone: us-central1-a
